@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  </head>
+  <body style="background-color:#5CDB95">
+    <div class="container">
+      <div class="py-5 text-center text-white" style="font-family: 'Anton', sans-serif;background-color:#05386B">
+        <h1 class="mb-4" style="font-size: 5em;">Upload Dataset</h1>
+        <form class=""method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form }}
+          <br>
+          <br>
+          <input type="submit" class="btn btn-danger " value="Upload" style="font-size: 1.5em;">
+          <a class="btn btn-danger ml-5" href="{% url 'index' %}" style="font-size: 1.5em;">Back</a>
+        </form>
+      </div>
+      <div class="row">
+        {% for x in img %}
+        <div class="col-sm-4">
+          <div class="card m-2">
+            <img src="{{x.photo.url}}" alt="Sorry,No Image" class="card-img-top" height="300px">
+            <div class="card-footer">
+              <small class="text-center" style="font-family: 'Anton', sans-serif;" ><h3>{{x.age}} ({{x.gender}})</h3></small>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </body>
+</html>

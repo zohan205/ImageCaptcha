@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Captcha Generation</title>
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="card bg-dark" >
+      <img src="{% static '/images/welcome.jpg' %}"  class="card-img-top" alt="WELCOME">
+      <div class="card-body">
+        {% if request.user.is_staff %}
+
+        <h2 class="card-title text-light">Hello Admins</h2>
+        <p class="text-light card-text text-center">Let's make the World a safer place</p>
+        <a href="{% url 'edit' %}" class="btn btn-primary m-5">Edit Dataset</a>
+        <a href="{% url 'logout' %}" class="btn btn-primary m-5">Logout</a>
+
+        {% else %}
+
+        <h2 class="card-title text-light">Homo Sapiens?!!</h2>
+        <p class="text-light card-text text-center">{{ request.user|title }}, let's take part to our captcha challenge.</p>
+        <a href="{% url 'challenge' %}" class="btn btn-primary mx-5">Take Part</a>
+        <a href="{% url 'logout' %}" class="btn btn-primary mx-5">Logout</a>
+
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>

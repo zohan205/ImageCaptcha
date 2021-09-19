@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Challenge</title>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="{% static '/css/theChallenge.css' %}">
+  </head>
+  <body>
+    <div class="container">
+
+      <div class="sub-container1">
+        {% for x in data %}
+        <img class="img-orientation" src="{{x.photo.url}}" alt="A Girl">
+        <script type="text/javascript">
+           var age = "{{x.age}}";
+           var gender = "{{x.gender}}";
+        </script>
+        {% endfor %}
+
+      </div>
+      <div class="upp">
+        <button type="refresh" value="Reload page" onclick="location.reload();">Refresh</button>
+        <label for="refresh">Can't decide?</label>
+      </div>
+      <div class="sub-container2">
+        <form>
+          {% csrf_token %}
+          <p>Please select the gender:</p>
+          <div>
+            <input type="radio" id="male" name="gender" value="Male">
+            <label for="male">Male</label>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" id="female" name="gender" value="Female">
+            <label for="female">Female</label>
+          </div>
+
+          <p>Please select the age group:</p>
+          <div>
+            <input type="radio" id="Child" name="age_gr" value="Child">
+            <label for="Child">Child (0-12 years)</label>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" id="Teenager" name="age_gr" value="Teenager">
+            <label for="Teenager">Teenager (13-19 years)</label><br>
+            <input type="radio" id="Adult" name="age_gr" value="Adult">
+            <label for="Adult">Adult (19-59 years)</labe3>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="radio" id="Senior_Adult" name="age_gr" value="Senior Adult">
+            <label for="Senior_Adult">Senior Adult (60 years and above)</label><br><br>
+          </div>
+          <div class="end">
+            <button onclick="CheckValue()" type="button" href="{% url 'index' %}">Submit</button>
+          </div>
+        </form>
+        <script type="text/javascript">
+          function CheckValue(){
+            function ValTrue(){
+              swal({
+                    title: "Congrats!",
+                    text: "You have successfuly passed the challenge",
+                    icon: "success",
+                    button: "Finish"
+                  }).then(function() {
+                        window.location = "{% url 'index' %}";
+                  });
+            }
+
+            function ValFalse(){
+              swal({
+                    title: "Oopss!",
+                    text: "Please try again...",
+                    icon: "error",
+                    button: "Retry"
+                  }).then(function() {
+                        window.location.reload();
+                  });
+            }
+            var lingo = document.querySelector(
+                    'input[name="gender"]:checked').value;
+            var boyosh = document.querySelector(
+                    'input[name="age_gr"]:checked').value;
+            if ( lingo == gender && boyosh == age){
+              ValTrue();
+            }
+            else{
+              console.log('client:'+boyosh+'  server:'+age)
+              ValFalse();
+            }
+          }
+        </script>
+      </div>
+    </div>
+  </body>
+</html>
